@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    --bg-primary: #0d0b0b;
+    --bg-secondary: #1a2332;
+    --sidebar: rgba(26, 35, 50, 0.95);
+    --text-primary: #ffffff;
+
+    --accent-primary: #df1124;
+    --accent-secondary: #f03d4e;
+
+    /* Buttons: Gradient using theme accents */
+    --button-bg: linear-gradient(to bottom, #df1124, #f03d4e);
+  }
+}
+
+@utility container {
+  @apply mx-auto max-w-[1920px] px-8 md:px-16 lg:px-20 xl:px-24;
+}
+
+@theme {
+  --font-sans: 'Figtree', sans-serif;
+  --font-wide: 'widescreen-ex', sans-serif;
+  --color-bgPrimary: var(--bg-primary);
+  --color-bgSecondary: var(--bg-secondary);
+
+  --color-accentPrimary: var(--accent-primary);
+  --color-accentSecondary: var(--accent-secondary);
+
+  --color-textPrimary: var(--text-primary);
+}
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .text-primary {
+    @apply text-textPrimary;
+  }
+  .main-section {
+    @apply flex h-full w-full grow flex-col items-center gap-5 pt-20 pr-25 pb-5 pl-5;
+  }
+
+  .button-gradient {
+    @apply bg-linear-180 from-(--button-primary) to-(--button-secondary);
+  }
+
+  .text-body {
+    @apply text-gray-500 dark:text-gray-300;
+  }
+
+  .bulk-btn {
+    @apply bg-accentPrimary block min-w-50 cursor-pointer rounded-md px-4 py-1.5 text-center text-white;
+  }
+  .outline-btn {
+    @apply border-accentPrimary text-accentPrimary block min-w-50 cursor-pointer rounded-md border px-4 py-1.5 text-center;
+  }
+
+  .h1 {
+    @apply text-textPrimary text-2xl font-bold sm:text-3xl;
+  }
+  .h2 {
+    @apply text-lg font-bold sm:text-xl;
+  }
+  .h3 {
+    @apply text-sm sm:text-lg;
+  }
+  .h4 {
+    @apply text-xs sm:text-sm;
+  }
+  .trans-colors {
+    @apply transition-colors duration-300;
+  }
+}
+
+.header--border {
+  background: linear-gradient(
+    345deg,
+    rgba(255, 255, 255, 0.1) 23%,
+    rgba(245, 113, 126, 0.25) 100%
+  );
+  -webkit-backdrop-filter: blur(69px);
+  backdrop-filter: blur(69px);
+
+  box-shadow:
+    0 0 5px #000 inset,
+    0 0 5px #000;
+}
+
+.mask {
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 0;
+}
