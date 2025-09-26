@@ -17,7 +17,7 @@
 }
 
 @utility container {
-  @apply mx-auto max-w-[1920px] px-8 md:px-16 lg:px-20 xl:px-24;
+  @apply mx-auto max-w-[1920px] px-8 md:px-16 lg:px-20 xl:px-28;
 }
 
 @theme {
@@ -33,42 +33,32 @@
 }
 
 @layer components {
+  .main-section {
+    @apply min-h-screen py-12;
+  }
   .flex-center {
     @apply flex items-center justify-center;
   }
   .text-primary {
     @apply text-textPrimary;
   }
-  .main-section {
-    @apply flex h-full w-full grow flex-col items-center gap-5 pt-20 pr-25 pb-5 pl-5;
-  }
 
   .button-gradient {
-    @apply bg-linear-180 from-(--button-primary) to-(--button-secondary);
-  }
-
-  .text-body {
-    @apply text-gray-500 dark:text-gray-300;
+    @apply bg-linear-180 from-(--accent-primary) to-(--accent-secondary);
   }
 
   .bulk-btn {
-    @apply bg-accentPrimary block min-w-50 cursor-pointer rounded-md px-4 py-1.5 text-center text-white;
+    @apply block min-w-[180px] cursor-pointer rounded-md px-4 py-1.5 text-center text-white;
   }
   .outline-btn {
-    @apply border-accentPrimary text-accentPrimary block min-w-50 cursor-pointer rounded-md border px-4 py-1.5 text-center;
+    @apply border-accentPrimary text-accentPrimary block min-w-[180px] cursor-pointer rounded-md border px-4 py-1.5 text-center;
   }
 
   .h1 {
-    @apply text-textPrimary text-2xl font-bold sm:text-3xl;
+    @apply text-textPrimary font-wide text-xl font-medium md:text-3xl lg:text-4xl xl:text-5xl;
   }
-  .h2 {
-    @apply text-lg font-bold sm:text-xl;
-  }
-  .h3 {
-    @apply text-sm sm:text-lg;
-  }
-  .h4 {
-    @apply text-xs sm:text-sm;
+  .text-body {
+    @apply font-wide text-3xl font-normal text-white;
   }
   .trans-colors {
     @apply transition-colors duration-300;
@@ -99,4 +89,16 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   z-index: 0;
+}
+
+.has-triangle::after {
+  position: absolute;
+  content: '';
+  border-right: 7px solid transparent;
+  border-left: 7px solid transparent;
+  border-top: 14px solid #fff;
+  right: 14px;
+  bottom: 50%;
+  transform: translateY(50%);
+  pointer-events: none;
 }
