@@ -7,8 +7,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <main className="App bg-bgPrimary">
-      {/* AnimatePresence enables exit animations when routes change */}
+    <main className="App bg-bgPrimary overflow-hidden">
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {routes.map(({ path, element }) => (

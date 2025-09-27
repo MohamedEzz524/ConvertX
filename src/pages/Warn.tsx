@@ -20,7 +20,7 @@ const Warn = () => {
           animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
           exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }}
         >
-          <div className="mt-40">
+          <div className="mt-18 sm:mt-40">
             <Breadcrumbs text="HIRE US" />
 
             <h1 className="h1 mt-4">

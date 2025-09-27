@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 
 const Hire = () => {
   const [range, setRange] = useState('');
+  const [innerValue, setInnerValue] = useState('');
 
   const nextLink = range === 'unValid' ? '/warn' : '/get-hired';
 
@@ -26,12 +27,12 @@ const Hire = () => {
           animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
           exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }}
         >
-          <div className="mt-40">
+          <div className="mt-18 sm:mt-40">
             <Breadcrumbs text="HIRE US" />
             <h1 className="h1 mt-4">Ready To 10X Your Brand Growth?</h1>
 
-            <div className="text-body mt-20 space-y-8 space-x-2">
-              <span className="inline break-words">
+            <div className="text-body mt-20 leading-10 lg:leading-20">
+              <span className="mr-2 mb-4 break-words md:mb-8">
                 Hey! My brand generated
               </span>
 
@@ -47,14 +48,15 @@ const Hire = () => {
                 ]}
               />
 
-              <span className="inline break-words">
+              <span className="mr-2 break-words">
                 in sales in the past month, and we spent
               </span>
 
               <SelectField
                 id="extra-select"
                 label="Select Range"
-                noValue
+                value={innerValue}
+                onChange={setInnerValue}
                 options={[
                   { value: 'valid', label: 'Below 100K' },
                   { value: 'unValid', label: '150K+' },
@@ -62,18 +64,17 @@ const Hire = () => {
                 ]}
               />
 
-              <span className="inline break-words">on ad spend.</span>
+              <span className="mr-2 break-words">on ad spend.</span>
             </div>
           </div>
 
           <div className="mt-15 flex gap-4">
-            <Button text="PREV STEP" type="outline" link="/" size="md" />
+            <Button text="PREV STEP" type="outline" link="/" />
             <Button
               text="NEXT STEP"
               type="bulk"
-              disabled={range.length === 0}
+              disabled={range.length === 0 || innerValue.length === 0}
               link={nextLink}
-              size="md"
             />
           </div>
         </motion.div>

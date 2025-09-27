@@ -4,7 +4,6 @@ type ButtonProps = {
   text: string;
   link: string;
   type: 'bulk' | 'outline';
-  size?: 'md' | 'sm' | 'lg';
   disabled?: boolean;
 };
 
@@ -14,7 +13,7 @@ const Button = ({ text, type, link, disabled }: ButtonProps) => {
   if (disabled) {
     return (
       <span
-        className={`${baseClasses} pointer-events-none cursor-not-allowed text-[15px] opacity-50`}
+        className={`${baseClasses} pointer-events-none cursor-not-allowed text-[12px] font-bold opacity-50 sm:text-[16px] lg:text-[13px] xl:text-[16px]`}
         aria-disabled="true"
       >
         {text}
@@ -23,7 +22,10 @@ const Button = ({ text, type, link, disabled }: ButtonProps) => {
   }
 
   return (
-    <Link to={link} className={`${baseClasses} pointer-events-auto`}>
+    <Link
+      to={link}
+      className={`${baseClasses} pointer-events-auto text-[12px] font-bold sm:text-[16px] lg:text-[13px] xl:text-[16px]`}
+    >
       {text}
     </Link>
   );

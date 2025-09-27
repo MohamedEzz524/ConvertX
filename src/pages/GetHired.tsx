@@ -19,7 +19,7 @@ const GetHired = () => {
           animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
           exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }}
         >
-          <div className="mt-40">
+          <div className="mt-18 sm:mt-40">
             <Breadcrumbs text="Consultation booking" />
 
             <h1 className="h1 mt-4">
@@ -29,10 +29,10 @@ const GetHired = () => {
           </div>
 
           {/* ---- Cal.com booking calendar via iframe ---- */}
-          <div className="mx-auto mt-15 min-h-[730px] w-[1000px]">
+          <div className="mx-auto mt-15 min-h-[1360px] w-[300px] md:min-h-[1700px] md:w-[750px] lg:min-h-[730px] lg:w-[980px]">
             <iframe
               src="https://cal.com/stelllar.vision/30min?layout=month_view"
-              className="mx-auto h-full min-h-[730px] w-[1000px] border-none"
+              className="mx-auto h-full min-h-[1360px] w-[300px] border-none md:min-h-[1700px] md:w-[750px] lg:min-h-[730px] lg:w-[980px]"
               allowFullScreen
               title="Consultation booking calendar"
             />

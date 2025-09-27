@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 interface Option {
   value: string;
   label: string;
@@ -11,7 +9,6 @@ interface Props {
   options: Option[];
   value?: string;
   onChange?: (value: string) => void;
-  noValue?: boolean;
 }
 
 const SelectField: React.FC<Props> = ({
@@ -20,31 +17,26 @@ const SelectField: React.FC<Props> = ({
   options,
   value,
   onChange,
-  noValue,
 }) => {
-  const [innerValue, setInnerValue] = useState('');
-  const newValue = noValue ? innerValue : value;
-
   return (
-    <label htmlFor={id} className="has-triangle relative inline-block">
+    <label
+      htmlFor={id}
+      className="has-triangle relative mr-2 inline-block leading-5"
+    >
       <span className="sr-only">{label}</span>
 
       <select
         id={id}
-        value={newValue}
-        onChange={(e) =>
-          noValue
-            ? setInnerValue(e.target.value)
-            : onChange && onChange(e.target.value)
-        }
-        className="min-w-80 cursor-pointer appearance-none border-b border-white bg-transparent text-center text-lg text-slate-400 backdrop-blur-md outline-none focus:outline-none"
+        value={value}
+        onChange={(e) => onChange && onChange(e.target.value)}
+        className="block min-w-30 cursor-pointer appearance-none border-b border-white bg-transparent text-center text-[12px] text-slate-400 backdrop-blur-md outline-none focus:outline-none lg:min-w-80 lg:text-lg"
       >
         <option value="" disabled hidden>
           {label}
         </option>
 
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option key={opt.value + Math.random()} value={opt.value}>
             {opt.label}
           </option>
         ))}
