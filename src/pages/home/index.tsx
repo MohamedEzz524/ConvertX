@@ -8,14 +8,14 @@ import Button from '../../components/Button';
 const Home = () => {
   return (
     <section className="relative min-h-screen">
-      <div className="bg-accentPrimary absolute -top-20 -left-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
-      <div className="bg-accentPrimary absolute -top-20 -right-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
+      <div className="bg-accentPrimary pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
+      <div className="bg-accentPrimary pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
 
       {/* fade UP on exit / DOWN on enter */}
       <motion.div
-        initial={{ opacity: 0, y: -40 }} // start slightly below
+        initial={{ opacity: 0, y: -40 }} 
         animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
-        exit={{ opacity: 0, y: -40, transition: { duration: 0.6 } }} // move up when leaving
+        exit={{ opacity: 0, y: -40, transition: { duration: 0.6 } }} 
       >
         <Announcement>
           Only{' '}
@@ -28,9 +28,9 @@ const Home = () => {
 
       <motion.div
         className="home-container z-1 flex h-full min-h-screen flex-col justify-between gap-4 pb-25 lg:flex-row"
-        initial={{ opacity: 0, y: 40 }} // start slightly above
+        initial={{ opacity: 0, y: 40 }} 
         animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
-        exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }} // move down when leaving
+        exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }}
       >
         {/* Left Side */}
         <div className="relative w-full pt-20 lg:w-[55%] 2xl:w-[50.5%]">
@@ -39,7 +39,7 @@ const Home = () => {
           </div>
           <Header />
 
-          <div className="bg-bgPrimary relative mt-18 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
+          <div className="bg-bgPrimary relative mt-15 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
             <div className="animate-gradientMove via-accentPrimary absolute inset-0 rounded-full bg-gradient-to-r from-transparent to-transparent bg-[length:60%_60%] p-[1px]">
               <div className="bg-bgPrimary h-full w-full rounded-full"></div>
             </div>

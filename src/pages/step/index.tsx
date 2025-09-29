@@ -12,8 +12,8 @@ interface StepProps {
 const Step = ({ breadcrumbs, title, children, progress }: StepProps) => {
   return (
     <section className="main-section">
-      <div className="bg-accentPrimary absolute -top-20 -left-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
-      <div className="bg-accentPrimary absolute -top-20 -right-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
+      <div className="bg-accentPrimary pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
+      <div className="bg-accentPrimary pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
 
       <motion.div
         initial={{ width: 0 }}
