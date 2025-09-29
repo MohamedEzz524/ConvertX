@@ -3,11 +3,13 @@ import Announcement from '../../components/Announcement';
 import Header from '../../components/Header';
 import Stars from '../../components/Stars';
 import Logo from '../../components/Logo';
+import Button from '../../components/Button';
 
 const Home = () => {
   return (
     <section className="relative min-h-screen">
       <div className="bg-accentPrimary absolute -top-20 -left-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
+      <div className="bg-accentPrimary absolute -top-20 -right-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
 
       {/* fade UP on exit / DOWN on enter */}
       <motion.div
@@ -59,12 +61,17 @@ const Home = () => {
             adipisci modi iste ea id? Dicta.
           </p>
 
+          <div className="mt-15 flex gap-4 sm:hidden">
+            <Button text="BOOK A CONSULTATION" link="/book" type="outline" />
+            <Button text="START NOW" link="/hire" type="bulk" />
+          </div>
+
           {/* Auto-Rotate */}
-          <div className="relative mt-18 h-14 border-t border-b border-white sm:mt-42 sm:h-22">
+          <div className="relative mt-18 h-14 sm:mt-42 sm:h-22">
             <span className="bg-bgPrimary absolute top-0 left-1/2 z-1 -translate-x-1/2 -translate-y-1/2 px-3 text-[12px] whitespace-nowrap text-white sm:text-base">
               WE WORK ONLY WITH THE BEST
             </span>
-            <div className="relative flex h-full w-full items-center overflow-hidden">
+            <div className="mask-fade relative flex h-full w-full items-center overflow-hidden border-t border-b border-white">
               <div className="marquee flex shrink-0">
                 <div className="flex h-full w-max shrink-0 items-center [&>img]:mr-16 [&>img]:h-4 [&>img]:sm:h-7">
                   <img
