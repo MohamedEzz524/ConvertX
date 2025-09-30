@@ -13,9 +13,9 @@ const Home = () => {
 
       {/* fade UP on exit / DOWN on enter */}
       <motion.div
-        initial={{ opacity: 0, y: -40 }} 
+        initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
-        exit={{ opacity: 0, y: -40, transition: { duration: 0.6 } }} 
+        exit={{ opacity: 0, y: -40, transition: { duration: 0.6 } }}
       >
         <Announcement>
           Only{' '}
@@ -28,18 +28,18 @@ const Home = () => {
 
       <motion.div
         className="home-container z-1 flex h-full min-h-screen flex-col justify-between gap-4 pb-25 lg:flex-row"
-        initial={{ opacity: 0, y: 40 }} 
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.6 } }}
         exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }}
       >
         {/* Left Side */}
-        <div className="relative w-full pt-20 lg:w-[55%] 2xl:w-[50.5%]">
+        <div className="relative w-full pt-14 sm:pt-20 lg:w-[55%] 2xl:w-[50.5%]">
           <div className="mb-8 block md:hidden">
             <Logo />
           </div>
           <Header />
 
-          <div className="bg-bgPrimary relative mt-15 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
+          <div className="bg-bgPrimary relative mt-2 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
             <div className="animate-gradientMove via-accentPrimary absolute inset-0 rounded-full bg-gradient-to-r from-transparent to-transparent bg-[length:60%_60%] p-[1px]">
               <div className="bg-bgPrimary h-full w-full rounded-full"></div>
             </div>
@@ -50,24 +50,24 @@ const Home = () => {
             </div>
           </div>
 
-          <h1 className="h1 mt-8 leading-snug">
-            We Generated +200M In Sales For +100 Ecom Brands
+          <h1 className="h1 mt-8 leading-snug text-balance">
+            We Generated +300M In Sales For +200 Ecom Brands
           </h1>
 
-          <p className="mt-7 text-[12px] font-normal text-white opacity-70 sm:text-lg lg:text-base">
+          <p className="mt-5 text-[12px] font-normal text-white opacity-70 sm:mt-7 sm:text-lg lg:text-base">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto
             eligendi, possimus placeat deleniti, in dignissimos necessitatibus,
             eaque saepe repellendus nostrum maiores voluptate vero mollitia
             adipisci modi iste ea id? Dicta.
           </p>
 
-          <div className="mt-15 flex gap-4 sm:hidden">
+          <div className="mt-6 flex gap-4 sm:hidden">
             <Button text="BOOK A CONSULTATION" link="/book" type="outline" />
             <Button text="START NOW" link="/hire" type="bulk" />
           </div>
 
           {/* Auto-Rotate */}
-          <div className="relative mt-18 h-14 sm:mt-42 sm:h-22">
+          <div className="relative mt-10 h-14 sm:mt-42 sm:h-22">
             <span className="bg-bgPrimary absolute top-0 left-1/2 z-1 -translate-x-1/2 -translate-y-1/2 px-3 text-[12px] whitespace-nowrap text-white sm:text-base">
               WE WORK ONLY WITH THE BEST
             </span>
@@ -123,7 +123,7 @@ const Home = () => {
         </div>
 
         {/* Right Video */}
-        <div className="relative z-0 mx-auto mt-18 flex w-7/10 items-center justify-center sm:mt-28 md:w-7/10 lg:mt-28 lg:mr-10 lg:ml-10 lg:w-[350px] xl:mr-30 xl:w-[410px] 2xl:mr-38 2xl:w-[470px]">
+        <div className="relative z-0 mx-auto mt-12 flex w-7/10 items-center justify-center sm:mt-28 md:w-7/10 lg:mt-28 lg:mr-10 lg:ml-10 lg:w-[350px] xl:mr-30 xl:w-[410px] 2xl:mr-38 2xl:w-[470px]">
           <video
             className="video-clip z-[1] block h-auto w-full object-cover"
             src="https://res.cloudinary.com/dzw9sp2g3/video/upload/v1758907880/Phone_co41wz.mp4"
