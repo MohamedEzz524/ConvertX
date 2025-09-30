@@ -33,24 +33,24 @@ const Home = () => {
         exit={{ opacity: 0, y: 40, transition: { duration: 0.6 } }}
       >
         {/* Left Side */}
-        <div className="relative w-full pt-14 sm:pt-20 lg:w-[55%] 2xl:w-[50.5%]">
+        <div className="relative w-full pt-13 sm:pt-20 lg:w-[55%] 2xl:w-[50.5%]">
           <div className="mb-8 block md:hidden">
             <Logo />
           </div>
           <Header />
 
-          <div className="bg-bgPrimary relative mt-2 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
+          <div className="bg-bgPrimary relative mt-0 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
             <div className="animate-gradientMove via-accentPrimary absolute inset-0 rounded-full bg-gradient-to-r from-transparent to-transparent bg-[length:60%_60%] p-[1px]">
               <div className="bg-bgPrimary h-full w-full rounded-full"></div>
             </div>
 
-            <div className="relative flex items-center gap-2 text-[12px] text-white sm:text-sm">
+            <div className="relative flex items-center gap-2 text-[11.5px] text-white sm:text-sm">
               <Stars />
               <span>4.7/5.0 Rating Based on 68 Reviews</span>
             </div>
           </div>
 
-          <h1 className="h1 mt-8 leading-snug text-balance">
+          <h1 className="h1 mt-6 leading-snug text-balance sm:mt-8">
             We Generated +300M In Sales For +200 Ecom Brands
           </h1>
 
@@ -123,7 +123,7 @@ const Home = () => {
         </div>
 
         {/* Right Video */}
-        <div className="relative z-0 mx-auto mt-12 flex w-7/10 items-center justify-center sm:mt-28 md:w-7/10 lg:mt-28 lg:mr-10 lg:ml-10 lg:w-[350px] xl:mr-30 xl:w-[410px] 2xl:mr-38 2xl:w-[470px]">
+        <div className="relative z-0 mx-auto mt-8 flex w-7/10 items-center justify-center sm:mt-28 md:w-7/10 lg:mt-28 lg:mr-10 lg:ml-10 lg:w-[350px] xl:mr-30 xl:w-[410px] 2xl:mr-38 2xl:w-[470px]">
           <video
             className="video-clip z-[1] block h-auto w-full object-cover"
             src="https://res.cloudinary.com/dzw9sp2g3/video/upload/v1758907880/Phone_co41wz.mp4"
