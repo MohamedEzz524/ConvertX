@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Announcement from '../../components/Announcement';
 import Header from '../../components/Header';
 import Stars from '../../components/Stars';
@@ -13,6 +14,7 @@ import image5 from '../../assets/5.png';
 import video from '../../assets/Phone.mp4';
 import videoBg from '../../assets/Phone Bg.svg';
 import svgBg from '../../assets/bg.svg';
+import logo from '../../assets/Logo.png';
 import reviewsData from '../../data/reviews.json';
 import Screenshots from '../../components/Screenshots';
 
@@ -56,15 +58,70 @@ interface Review {
 }
 
 const Home = () => {
+  const navigate = useNavigate();
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showStickyHeader, setShowStickyHeader] = useState(false);
+  const [isExitingStickyHeader, setIsExitingStickyHeader] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const mobileButtonsRef = useRef<HTMLDivElement>(null);
   const reviews = reviewsData as Review[];
 
   // Fallback in case the onLoadedData never fires
   useEffect(() => {
     const timeout = setTimeout(() => setVideoLoaded(true), 5000);
     return () => clearTimeout(timeout);
+  }, []);
+
+  // Intersection Observer for sticky header
+  useEffect(() => {
+    const getElementToObserve = () => {
+      // Check screen size (sm breakpoint is 640px)
+      const isMobile = window.innerWidth < 640;
+
+      if (isMobile) {
+        // Mobile: observe mobile buttons only
+        return mobileButtonsRef.current;
+      } else {
+        // Desktop: observe Header only
+        return headerRef.current;
+      }
+    };
+
+    const elementToObserve = getElementToObserve();
+    if (!elementToObserve) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // When element is not intersecting (scrolled out of view), show sticky header
+          setShowStickyHeader(!entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    );
+
+    observer.observe(elementToObserve);
+
+    // Handle resize to switch between desktop/mobile observers
+    const handleResize = () => {
+      observer.disconnect();
+      const newElement = getElementToObserve();
+      if (newElement) {
+        observer.observe(newElement);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const handleNext = () => {
@@ -83,8 +140,93 @@ const Home = () => {
     setTimeout(() => setIsAnimating(false), 600);
   };
 
+  const handleStickyHeaderLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    path: string,
+  ) => {
+    if (showStickyHeader && !isExitingStickyHeader) {
+      e.preventDefault();
+      setIsExitingStickyHeader(true);
+      setShowStickyHeader(false);
+
+      // Wait for exit animation to complete before navigating
+      setTimeout(() => {
+        navigate(path);
+        setIsExitingStickyHeader(false);
+      }, 600); // Match animation duration
+    }
+  };
+
   return (
     <>
+      {/* Sticky Header - appears when Header scrolls out of view */}
+      <AnimatePresence>
+        {showStickyHeader && (
+          <motion.header
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="header--border fixed right-0 left-0 z-18 w-full"
+            style={{ top: '28px' }} // Position below Announcement (approx height)
+          >
+            <div className="mask pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(170deg,rgba(255,155,165,0.6)_0%,rgba(134,44,53,0.6)_35%)] p-[1px]"></div>
+
+            <div className="relative z-10 container mx-auto flex items-center justify-between py-4">
+              {/* Logo */}
+              <Link
+                to="/"
+                className="flex-shrink-0"
+                onClick={(e) => {
+                  if (showStickyHeader && !isExitingStickyHeader) {
+                    e.preventDefault();
+                    setIsExitingStickyHeader(true);
+                    setShowStickyHeader(false);
+                    setTimeout(() => {
+                      navigate('/');
+                      setIsExitingStickyHeader(false);
+                    }, 600);
+                  }
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="logo"
+                  className="block h-auto w-24 md:w-32"
+                  draggable={false}
+                />
+              </Link>
+
+              {/* Buttons */}
+              <div className="flex items-center gap-3 md:gap-5">
+                {/* Book Consultation - hidden on mobile */}
+                <div className="hidden sm:block">
+                  <a
+                    href="/book-consultation"
+                    className="outline-btn pointer-events-auto text-[12px] font-bold sm:text-[16px] lg:text-[13px] xl:text-[16px]"
+                    onClick={(e) =>
+                      handleStickyHeaderLinkClick(e, '/book-consultation')
+                    }
+                  >
+                    BOOK A CONSULTATION
+                  </a>
+                </div>
+                {/* Start Now - visible on all screens */}
+                <a
+                  href="/getting-started"
+                  className="button-gradient bulk-btn pointer-events-auto text-[12px] font-bold sm:text-[16px] lg:text-[13px] xl:text-[16px]"
+                  onClick={(e) =>
+                    handleStickyHeaderLinkClick(e, '/getting-started')
+                  }
+                >
+                  START NOW
+                </a>
+              </div>
+            </div>
+          </motion.header>
+        )}
+      </AnimatePresence>
+
       <section className="relative min-h-screen">
         <div className="bg-accentPrimary pointer-events-none absolute -top-20 -left-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
         <div className="bg-accentPrimary pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full opacity-10 blur-[140px]" />
@@ -115,7 +257,9 @@ const Home = () => {
             <div className="mb-8 block md:hidden">
               <Logo />
             </div>
-            <Header />
+            <div ref={headerRef}>
+              <Header />
+            </div>
 
             <div className="bg-bgPrimary relative mt-0 inline-flex items-center rounded-full px-4 py-2 sm:mt-38 sm:px-8">
               <div className="animate-gradientMove via-accentPrimary absolute inset-0 rounded-full bg-gradient-to-r from-transparent to-transparent bg-[length:60%_60%] p-[1px]">
@@ -140,7 +284,7 @@ const Home = () => {
               thing in your market
             </p>
 
-            <div className="mt-6 flex gap-4 sm:hidden">
+            <div ref={mobileButtonsRef} className="mt-6 flex gap-4 sm:hidden">
               <Button
                 text="BOOK A CONSULTATION"
                 link="/book-consultation"

@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
-import type { FormEvent } from 'react';
-// import type { ChangeEvent } from 'react'; // Commented out - file upload not used
+import type { FormEvent, ChangeEvent } from 'react';
 
 // Define which fields are required (no * = optional)
 const REQUIRED_FIELDS = {
@@ -31,9 +30,8 @@ const DisqualifiedForm = () => {
     upcomingCollections: '',
     additionalNotes: '',
   });
-  // File upload is a pro feature - commented out
-  // const [transactionScreenshot, setTransactionScreenshot] =
-  //   useState<File | null>(null);
+  const [transactionScreenshot, setTransactionScreenshot] =
+    useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error' | string
@@ -58,11 +56,11 @@ const DisqualifiedForm = () => {
       },
     );
 
-    // File upload validation removed (pro feature)
-    // const fileUploaded = transactionScreenshot !== null;
+    // Check if transaction screenshot is uploaded (required)
+    const fileUploaded = transactionScreenshot !== null;
 
-    return allFieldsValid;
-  }, [formData]);
+    return allFieldsValid && fileUploaded;
+  }, [formData, transactionScreenshot]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -71,12 +69,11 @@ const DisqualifiedForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // File upload handler commented out (pro feature)
-  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     setTransactionScreenshot(e.target.files[0]);
-  //   }
-  // };
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setTransactionScreenshot(e.target.files[0]);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,10 +93,10 @@ const DisqualifiedForm = () => {
         formDataToSend.append(key, value);
       });
 
-      // File upload commented out (pro feature)
-      // if (transactionScreenshot) {
-      //   formDataToSend.append('transactionScreenshot', transactionScreenshot);
-      // }
+      // Append transaction screenshot if provided
+      if (transactionScreenshot) {
+        formDataToSend.append('transactionScreenshot', transactionScreenshot);
+      }
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -137,14 +134,14 @@ const DisqualifiedForm = () => {
           upcomingCollections: '',
           additionalNotes: '',
         });
-        // File upload reset commented out (pro feature)
-        // setTransactionScreenshot(null);
-        // const fileInput = document.getElementById(
-        //   'transactionScreenshot',
-        // ) as HTMLInputElement;
-        // if (fileInput) {
-        //   fileInput.value = '';
-        // }
+        setTransactionScreenshot(null);
+        // Reset file input
+        const fileInput = document.getElementById(
+          'transactionScreenshot',
+        ) as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
       } else {
         const errorMessage =
           result.message ||
@@ -345,8 +342,8 @@ const DisqualifiedForm = () => {
           />
         </div>
 
-        {/* Transaction Screenshot Upload - Commented out (File upload is a pro feature) */}
-        {/* <div>
+        {/* Transaction Screenshot Upload */}
+        <div>
           <label
             htmlFor="transactionScreenshot"
             className="text-textPrimary mb-2 block text-sm font-medium"
@@ -371,7 +368,7 @@ const DisqualifiedForm = () => {
               Selected: {transactionScreenshot.name}
             </p>
           )}
-        </div> */}
+        </div>
 
         {/* Submit button */}
         <div className="flex justify-center md:justify-start">

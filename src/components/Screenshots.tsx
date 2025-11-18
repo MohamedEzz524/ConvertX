@@ -144,8 +144,8 @@ const Screenshots = () => {
         // md and above (but below lg): 80vh
         setMaxHeight('80vh');
       } else {
-        // below md: 50vh
-        setMaxHeight('50vh');
+        // below md: 60vh
+        setMaxHeight('60vh');
       }
     };
 
@@ -230,7 +230,7 @@ const Screenshots = () => {
         <div className="relative overflow-hidden">
           <motion.div
             ref={contentRef}
-            className="flex gap-2 md:gap-6"
+            className="flex flex-col gap-2 md:flex-row md:gap-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -243,7 +243,7 @@ const Screenshots = () => {
             }}
           >
             {/* Column 1 */}
-            <div className="flex w-[calc(50%-0.25rem)] flex-col gap-2 md:w-[calc(50%-0.75rem)] md:gap-6">
+            <div className="flex w-full flex-col gap-2 md:w-[calc(50%-0.75rem)] md:gap-6">
               {column1.map((imageIndex, idx) => {
                 const aspectRatio = imageAspectRatios[imageIndex] || 1.5;
                 const shouldLoad = loadedImages.has(imageIndex) || idx < 3; // Load first 3 in each column
@@ -305,7 +305,7 @@ const Screenshots = () => {
             </div>
 
             {/* Column 2 */}
-            <div className="flex w-[calc(50%-0.25rem)] flex-col gap-2 md:w-[calc(50%-0.75rem)] md:gap-6">
+            <div className="flex w-full flex-col gap-2 md:w-[calc(50%-0.75rem)] md:gap-6">
               {column2.map((imageIndex, idx) => {
                 const aspectRatio = imageAspectRatios[imageIndex] || 1.5;
                 const shouldLoad = loadedImages.has(imageIndex) || idx < 3; // Load first 3 in each column

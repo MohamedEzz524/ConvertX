@@ -1,13 +1,12 @@
 import { useState, useMemo } from 'react';
-import type { FormEvent } from 'react';
-// import type { ChangeEvent } from 'react'; // Commented out - file upload not used
+import type { FormEvent, ChangeEvent } from 'react';
 
 // Define which fields are required
 const REQUIRED_FIELDS = {
   name: true,
   phoneNumber: true,
   role: true,
-  brandIGUsername: false,
+  brandIGUsername: true,
   businessGoals: true,
   extraInfo: false,
 } as const;
@@ -21,8 +20,7 @@ const QualifiedForm = () => {
     businessGoals: '',
     extraInfo: '',
   });
-  // File upload is a pro feature - commented out
-  // const [screenshot, setScreenshot] = useState<File | null>(null);
+  const [screenshot, setScreenshot] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error' | string
@@ -30,22 +28,29 @@ const QualifiedForm = () => {
 
   // Check if all required fields are valid
   const isFormValid = useMemo(() => {
-    return Object.entries(REQUIRED_FIELDS).every(([fieldName, isRequired]) => {
-      if (!isRequired) {
-        return true; // Optional fields don't need validation
-      }
+    const allFieldsValid = Object.entries(REQUIRED_FIELDS).every(
+      ([fieldName, isRequired]) => {
+        if (!isRequired) {
+          return true; // Optional fields don't need validation
+        }
 
-      const value = formData[fieldName as keyof typeof formData];
+        const value = formData[fieldName as keyof typeof formData];
 
-      // Check if field is empty
-      if (!value.trim()) {
-        return false;
-      }
+        // Check if field is empty
+        if (!value.trim()) {
+          return false;
+        }
 
-      // For all fields, just check if not empty
-      return value.trim().length > 0;
-    });
-  }, [formData]);
+        // For all fields, just check if not empty
+        return value.trim().length > 0;
+      },
+    );
+
+    // Check if screenshot is uploaded (required)
+    const fileUploaded = screenshot !== null;
+
+    return allFieldsValid && fileUploaded;
+  }, [formData, screenshot]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -54,12 +59,11 @@ const QualifiedForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // File upload handler commented out (pro feature)
-  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     setScreenshot(e.target.files[0]);
-  //   }
-  // };
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setScreenshot(e.target.files[0]);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,10 +83,10 @@ const QualifiedForm = () => {
         formDataToSend.append(key, value);
       });
 
-      // File upload commented out (pro feature)
-      // if (screenshot) {
-      //   formDataToSend.append('screenshot', screenshot);
-      // }
+      // Append screenshot if provided
+      if (screenshot) {
+        formDataToSend.append('screenshot', screenshot);
+      }
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -118,14 +122,14 @@ const QualifiedForm = () => {
           businessGoals: '',
           extraInfo: '',
         });
-        // File upload reset commented out (pro feature)
-        // setScreenshot(null);
-        // const fileInput = document.getElementById(
-        //   'screenshot',
-        // ) as HTMLInputElement;
-        // if (fileInput) {
-        //   fileInput.value = '';
-        // }
+        setScreenshot(null);
+        // Reset file input
+        const fileInput = document.getElementById(
+          'screenshot',
+        ) as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
       } else {
         const errorMessage =
           result.message ||
@@ -229,8 +233,8 @@ const QualifiedForm = () => {
           </div>
         </div>
 
-        {/* Row 3: Image Upload - Commented out (File upload is a pro feature) */}
-        {/* <div className="flex flex-col gap-6">
+        {/* Row 3: Image Upload */}
+        <div className="flex flex-col gap-6">
           <div className="flex-1">
             <label
               htmlFor="screenshot"
@@ -245,6 +249,7 @@ const QualifiedForm = () => {
               name="screenshot"
               accept="image/*"
               onChange={handleFileChange}
+              required
               className="text-textPrimary focus:border-accentPrimary file:bg-accentPrimary hover:file:bg-accentSecondary w-full border-b border-white bg-transparent px-4 py-3 placeholder-slate-400 transition-colors outline-none file:mr-4 file:cursor-pointer file:rounded file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
             />
             {screenshot && (
@@ -253,7 +258,7 @@ const QualifiedForm = () => {
               </p>
             )}
           </div>
-        </div> */}
+        </div>
 
         {/* Row 4: Business Goals */}
         <div className="flex flex-col gap-6">
@@ -338,7 +343,9 @@ const QualifiedForm = () => {
           What happens next?
         </p>
         <p className="text-sm text-slate-400">
-          After you submit this form, someone from our team will review your submission and contact you within 24-48 hours to validate teh data and schedule your discovery call time.
+          After you submit this form, someone from our team will review your
+          submission and contact you within 24-48 hours to validate teh data and
+          schedule your discovery call time.
         </p>
       </div>
 
